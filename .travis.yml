@@ -5,7 +5,7 @@ node_js:
 cache: yarn
 
 
-script: echo "it works"
+script: gridsome build
 
 before_install: cd blog
 
