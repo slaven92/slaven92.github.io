@@ -6,4 +6,4 @@ node_modules
 dist
 .env
 .env.*
-philosophy-colorlib/*
+philosophy-colorlib
