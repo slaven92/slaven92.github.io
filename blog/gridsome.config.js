@@ -6,6 +6,7 @@
 
 module.exports = {
   siteName: 'Gridsome',
+  siteUrl: 'https://www.slaven92.tk',
   plugins: [
     {
       use: '@gridsome/source-filesystem',
@@ -14,7 +15,14 @@ module.exports = {
         baseDir: './content/blog',
         path: '**/*.md',
       }
+    },
+    {
+      use: '@gridsome/plugin-sitemap',
+    },
+    {
+      use: 'gridsome-plugin-robots-txt',
     }
+
   ],
   transformers: {
     remark: {}

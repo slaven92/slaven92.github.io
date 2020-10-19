@@ -1,5 +1,5 @@
 <template>
-  <div class="layout">
+  <div class="layout container">
     <header class="header">
       <strong>
         <g-link to="/">{{ $static.metadata.siteName }}</g-link>
@@ -12,6 +12,9 @@
         </g-link>
       </nav>
     </header>
+    <div class="alert alert-primary" role="alert">
+      A simple primary alert—check it out!
+    </div>
     <slot/>
   </div>
 </template>
