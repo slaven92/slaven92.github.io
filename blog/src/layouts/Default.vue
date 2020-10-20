@@ -1,55 +1,52 @@
 <template>
-  <div class="layout container">
+  <div class="container">
+
+    <Header/>
+
     <header class="header">
       <strong>
         <g-link to="/">{{ $static.metadata.siteName }}</g-link>
       </strong>
+
       <nav class="nav">
         <g-link class="nav__link" to="/">Home</g-link>
         <g-link class="nav__link" to="/about/">About</g-link>
-        <g-link v-for="link in $static.allBlogPost.edges" class="nav__link" :to="link.node.path" :key="link.node.id">
-          {{ link.node.title }}
-        </g-link>
       </nav>
     </header>
-    <div class="alert alert-primary" role="alert">
-      A simple primary alert—check it out!
+
+
+    <div class="container">
+      <slot/>
     </div>
-    <slot/>
+
+
+    <Footer/>
+    
   </div>
 </template>
+
+<script>
+import Header from '~/components/Header.vue'
+import Footer from '~/components/Footer.vue'
+
+export default {
+  components: {
+    Header,
+    Footer
+  }
+}
+</script>
+
 
 <static-query>
 query {
   metadata {
     siteName
   }
-  allBlogPost{
-    edges{
-      node{
-        title
-        path
-      }
-    }
-  }
 }
 </static-query>
 
 <style>
-body {
-  font-family: -apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
-  margin:0;
-  padding:0;
-  line-height: 1.5;
-}
-
-.layout {
-  max-width: 760px;
-  margin: 0 auto;
-  padding-left: 20px;
-  padding-right: 20px;
-}
-
 .header {
   display: flex;
   justify-content: space-between;
