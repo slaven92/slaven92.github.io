@@ -1,6 +1,9 @@
 <template>
   <Layout>
-    <div v-html="$page.blogPost.content" />
+    <div class="container">
+      <div v-html="$page.blogPost.content" />
+    </div>
+    
   </Layout>
 </template>
 
