@@ -1,31 +1,15 @@
 <template>
-    <header>
         <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
         <ol class="carousel-indicators">
-            <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
-            <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
-            <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+            <li v-for="(item,index) in $static.allBlogPost.edges"  :key="item.node.id" data-target="#carouselExampleIndicators" :data-slide-to="index" :class="{ 'active': index === 0 }"></li>
         </ol>
         <div class="carousel-inner" role="listbox">
             <!-- Slide One - Set the background image for this slide in the line below -->
-            <div class="carousel-item active" style="background-image: url('http://placehold.it/1900x1080')">
+            <div v-for="(item,index) in $static.allBlogPost.edges"  :key="item.node.id" class="carousel-item" :class="{ 'active': index === 0 }">
+            <g-image alt="Example image" src="http://placehold.it/1900x1080" class="d-block w-100"/>
             <div class="carousel-caption d-none d-md-block">
-                <h3>First Slide</h3>
+                <h3>{{ item.node.title }}   </h3>
                 <p>This is a description for the first slide.</p>
-            </div>
-            </div>
-            <!-- Slide Two - Set the background image for this slide in the line below -->
-            <div class="carousel-item" style="background-image: url('http://placehold.it/1900x1080')">
-            <div class="carousel-caption d-none d-md-block">
-                <h3>Second Slide</h3>
-                <p>This is a description for the second slide.</p>
-            </div>
-            </div>
-            <!-- Slide Three - Set the background image for this slide in the line below -->
-            <div class="carousel-item" style="background-image: url('http://placehold.it/1900x1080')">
-            <div class="carousel-caption d-none d-md-block">
-                <h3>Third Slide</h3>
-                <p>This is a description for the third slide.</p>
             </div>
             </div>
         </div>
@@ -38,17 +22,19 @@
             <span class="sr-only">Next</span>
         </a>
         </div>
-    </header>
 </template>
 
-<style scoped>
-.carousel-item {
-  height: 65vh;
-  min-height: 300px;
-  background: no-repeat center center scroll;
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
-  background-size: cover;
+
+<static-query>
+query {
+  allBlogPost(limit: 3){
+    edges{
+      node{
+        id
+        title
+        path
+      }
+    }
+  }
 }
-</style>
+</static-query>

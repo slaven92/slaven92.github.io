@@ -15,15 +15,6 @@
 
       <h1>Hello, world!</h1>
 
-      <div class="list-group">
-          <g-link v-for="link in $static.allBlogPost.edges" 
-            class="list-group-item list-group-item-action"
-            :to="link.node.path" 
-            :key="link.node.id">
-            {{ link.node.title }}
-          </g-link>
-      </div>
-
     <p>
       Lorem ipsum dolor sit amet, consectetur adipisicing elit. Pariatur excepturi labore tempore expedita, et iste tenetur suscipit explicabo! Dolores, aperiam non officia eos quod asperiores
     </p>
@@ -39,7 +30,7 @@
 </template>
 
 
-<static-query>
+<page-query>
 query {
   allBlogPost{
     edges{
@@ -50,7 +41,7 @@ query {
     }
   }
 }
-</static-query>
+</page-query>
 
 
 
