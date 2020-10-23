@@ -34,7 +34,7 @@ jobs:
         with:
           path: |
             **/node_modules
-          key: ${{ runner.os }}-nodes-${{ hashFiles('./vue-web/package-lock.json') }}
+          key: ${{ runner.os }}-nodes-${{ hashFiles('./blog/yarn.lock') }}
       
       
       - name: Setup Node.js environment
@@ -48,7 +48,7 @@ jobs:
       - name: Build Gridsome files
         run: |
             cd blog
-            gridsome build
+            npm run build
             cd ..
 
       - name: Deploy
