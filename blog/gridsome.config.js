@@ -9,6 +9,26 @@ module.exports = {
   siteUrl: 'https://www.slaven92.tk',
   plugins: [
     {
+      use: "gridsome-plugin-pwa",
+      options: {
+        title: "Gridsome",
+        startUrl: "/",
+        display: "standalone",
+        statusBarStyle: "default",
+        manifestPath: "manifest.json",
+        disableServiceWorker: true,
+        serviceWorkerPath: "service-worker.js",
+        cachedFileTypes: "js,json,css,html,png,jpg,jpeg,svg",
+        shortName: "Gridsome",
+        themeColor: "#666600",
+        backgroundColor: "#ffffff",
+        icon: "src/favicon.png", // must be provided like 'src/favicon.png'
+        msTileImage: "",
+        msTileColor: "#666600",
+        gcmSenderId: undefined,
+      },
+    },
+    {
       use: '@gridsome/source-filesystem',
       options: {
         typeName: 'BlogPost',
@@ -21,8 +41,7 @@ module.exports = {
     },
     {
       use: 'gridsome-plugin-robots-txt',
-    }
-
+    },
   ],
   transformers: {
     remark: {}
