@@ -11,7 +11,11 @@ module.exports = {
     {
       use: "gridsome-plugin-pwa",
       options: {
-        title: "Gridsome",
+        title: "slaven92",
+        shortName: 'slaven92',
+        description: "Slaven's blog about tech and food",
+        categories: ['education', 'food'],
+        lang: 'en-US',
         startUrl: "/",
         display: "standalone",
         statusBarStyle: "default",
@@ -19,12 +23,12 @@ module.exports = {
         disableServiceWorker: false,
         serviceWorkerPath: "service-worker.js",
         cachedFileTypes: "js,json,css,html,png,jpg,jpeg,svg",
-        shortName: "Gridsome",
-        themeColor: "#666600",
+        shortName: "Slaven's Blog",
+        themeColor: "#212529",
         backgroundColor: "#ffffff",
         icon: "src/favicon.png", // must be provided like 'src/favicon.png'
         msTileImage: "",
-        msTileColor: "#666600",
+        msTileColor: "#212529",
         gcmSenderId: undefined,
       },
     },
