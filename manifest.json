@@ -1,9 +1,15 @@
 {
-  "name": "Gridsome",
-  "short_name": "Gridsome",
+  "name": "slaven92",
+  "short_name": "Slaven's Blog",
+  "description": "Slaven's blog about tech and food",
+  "lang": "en-US",
+  "categories": [
+    "education",
+    "food"
+  ],
   "start_url": "/",
   "display": "standalone",
-  "theme_color": "#666600",
+  "theme_color": "#212529",
   "background_color": "#ffffff",
   "icons": [
     {
