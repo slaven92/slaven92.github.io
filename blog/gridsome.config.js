@@ -16,7 +16,7 @@ module.exports = {
         display: "standalone",
         statusBarStyle: "default",
         manifestPath: "manifest.json",
-        disableServiceWorker: true,
+        disableServiceWorker: false,
         serviceWorkerPath: "service-worker.js",
         cachedFileTypes: "js,json,css,html,png,jpg,jpeg,svg",
         shortName: "Gridsome",
