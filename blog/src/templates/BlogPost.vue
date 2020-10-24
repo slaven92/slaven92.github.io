@@ -29,13 +29,18 @@
             <!-- Date/Time -->
             <p>Posted on January 1, 2017 at 12:00 PM</p>
           <hr>
+
+          <div v-html="$page.blogPost.content" />
+
         </div>
+
+        
         
         <SideBarBlog/>
 
       </div>
 
-      <div v-html="$page.blogPost.content" />
+      
     </div>
   </Layout>
 </template>
