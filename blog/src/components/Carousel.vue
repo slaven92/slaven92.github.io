@@ -6,7 +6,7 @@
         <div class="carousel-inner" role="listbox">
             <!-- Slide One - Set the background image for this slide in the line below -->
             <div v-for="(item,index) in $static.allBlogPost.edges"  :key="item.node.id" class="carousel-item" :class="{ 'active': index === 0 }">
-            <g-image alt="Example image" src="http://placehold.it/1900x1080" class="d-block w-100"/>
+            <g-image alt="Example image" src="~/assets/images/books.jpg" class="d-block w-100" height="700"/>
             <div class="carousel-caption d-none d-md-block">
                 <h3>{{ item.node.title }}   </h3>
                 <p>This is a description for the first slide.</p>

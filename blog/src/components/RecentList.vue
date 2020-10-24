@@ -5,7 +5,7 @@
       <div v-for="(rowNum,indexr) in numberOfRows" :key="indexr*1000+1" class="row">
       <div v-for="(colNum,indexc) in numberOfColumns" :key="indexc*5000+1" class="col-lg-4 col-sm-6 portfolio-item">
         <div class="card h-100">
-          <g-link :to="$static.allBlogPost.edges[indexc].node.path"><g-image class="card-img-top" src="http://placehold.it/700x400" alt=""/></g-link>
+          <g-link :to="$static.allBlogPost.edges[indexc].node.path"><g-image class="card-img-top" src="~/assets/images/pier.jpg" alt=""/></g-link>
           <div class="card-body">
             <h4 class="card-title">
               <g-link :to="$static.allBlogPost.edges[indexc].node.path">{{$static.allBlogPost.edges[0].node.title}}</g-link>
