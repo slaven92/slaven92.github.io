@@ -12,10 +12,13 @@
         <li class="breadcrumb-item">
           <g-link to="/index">Home</g-link>
         </li>
-        <li class="breadcrumb-item active">Blog Home</li>
+        <li class="breadcrumb-item">
+          <g-link to="/blog">Blog</g-link>
+        </li>
+        <li class="breadcrumb-item active">Category - {{ $page.tag.title }}</li>
       </ol>
 
-      <BlogList :postList="$page.allBlogPost.edges"/>
+      <BlogList :postList="$page.tag.belongsTo.edges"/>
     
     
     </div>
@@ -24,16 +27,24 @@
 
 
 <page-query>
-query {
-  allBlogPost{
-    edges{
-      node{
-        title
-        path
+query Tag($id: ID!) {
+  tag(id: $id) {
+    title
+    belongsTo {
+      edges {
+        node {
+          ... on BlogPost {
+            id
+            title
+            path
+            content
+          }
+        }
       }
     }
   }
 }
+
 </page-query>
 
 

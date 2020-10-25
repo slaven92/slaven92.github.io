@@ -2,7 +2,7 @@
 title: test2
 date: 2019-02-04
 published: true
-tags: [mobile, product design]
+tags: [product design,slaven]
 client: Google
 role: Product designer
 link: google.com

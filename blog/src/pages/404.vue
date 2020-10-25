@@ -19,30 +19,19 @@
         <p>The page you're looking for could not be found. Here are some helpful links to get you back on track:</p>
         <ul>
           <li>
-            <a href="index.html">Home</a>
+            <g-link to="/">Home</g-link>
           </li>
           <li>
-            <a href="about.html">About</a>
+            <g-link to="/about">About</g-link>
           </li>
           <li>
-            <a href="services.html">Services</a>
+            <g-link to="/contact">Contact</g-link>
           </li>
           <li>
-            <a href="contact.html">Contact</a>
+            <g-link to="/blog">Blog</g-link>
           </li>
           <li>
-            Blog
-            <ul>
-              <li>
-                <a href="blog-home-1.html">Blog Home 1</a>
-              </li>
-              <li>
-                <a href="blog-home-2.html">Blog Home 2</a>
-              </li>
-              <li>
-                <a href="blog-post.html">Blog Post</a>
-              </li>
-            </ul>
+            <g-link to="/projects">Projects</g-link>
           </li>
           <li>
             Other Pages

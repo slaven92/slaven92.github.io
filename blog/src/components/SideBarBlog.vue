@@ -24,29 +24,10 @@
         <h5 class="card-header">Categories</h5>
         <div class="card-body">
           <div class="row">
-            <div class="col-lg-6">
+            <div class="col-lg-6" v-for="(list,index) in split" :key="index">
               <ul class="list-unstyled mb-0">
-                <li>
-                  <a href="#">Web Design</a>
-                </li>
-                <li>
-                  <a href="#">HTML</a>
-                </li>
-                <li>
-                  <a href="#">Freebies</a>
-                </li>
-              </ul>
-            </div>
-            <div class="col-lg-6">
-              <ul class="list-unstyled mb-0">
-                <li>
-                  <a href="#">JavaScript</a>
-                </li>
-                <li>
-                  <a href="#">CSS</a>
-                </li>
-                <li>
-                  <a href="#">Tutorials</a>
+                <li v-for="(item,index2) in list" :key="index2" >
+                  <g-link :to="item.node.path">{{ item.node.title }}</g-link>
                 </li>
               </ul>
             </div>
@@ -67,11 +48,11 @@
 
 
 <static-query>
-query {
-  allBlogPost{
+query{
+  allTag{
+    totalCount
     edges{
       node{
-        id
         title
         path
       }
@@ -79,3 +60,25 @@ query {
   }
 }
 </static-query>
+
+<script>
+export default {
+  data() {
+    return{
+      columns: 2,
+    }
+  },
+  computed:{
+    split: function(){
+      var all = this.$static.allTag.edges
+      var result = []
+      for (let index = 0; index < this.columns; index++) {
+        var chunks=all.length/this.columns
+        var temp = all.slice(index*chunks,(index+1)*chunks)
+        result.unshift(temp)
+      }
+      return result
+    }
+  }
+}
+</script>

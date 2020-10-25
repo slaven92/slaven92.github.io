@@ -38,6 +38,12 @@ module.exports = {
         typeName: 'BlogPost',
         baseDir: './content/blog',
         path: '**/*.md',
+        refs: {
+          tags: {
+            typeName: 'Tag',
+            create: true,
+          }
+        }
       }
     },
     {
@@ -49,5 +55,9 @@ module.exports = {
   ],
   transformers: {
     remark: {}
+  },
+  templates: {
+    BlogPost: '/blog/:title',
+    Tag: '/category/:title'
   }
 }

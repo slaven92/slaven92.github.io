@@ -4,7 +4,7 @@
       <!-- Blog Post -->
       <div
         class="card mb-4"
-        v-for="blog in $static.allBlogPost.edges"
+        v-for="blog in postList"
         :key="blog.node.id"
       >
         <g-image
@@ -48,21 +48,6 @@
   </div>
 </template>
 
-
-<static-query>
-query {
-  allBlogPost{
-    edges{
-      node{
-        id
-        title
-        path
-      }
-    }
-  }
-}
-</static-query>
-
 <script>
 
 import SideBarBlog from "~/components/SideBarBlog.vue"
@@ -70,6 +55,7 @@ import SideBarBlog from "~/components/SideBarBlog.vue"
 export default {
   components: {
     SideBarBlog,
-  }
+  },
+  props: ['postList']
 }
 </script>
