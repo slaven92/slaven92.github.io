@@ -16,7 +16,12 @@
       </ol>
 
       <BlogList :postList="$page.allBlogPost.edges"/>
-    
+
+      <div  class="row">
+        <div class="col-md-8">
+          <Pager :info="$page.allBlogPost.pageInfo" linkClass="page-link" class="pagination justify-content-center mb-4"/>
+        </div>
+      </div>
     
     </div>
   </Layout>
@@ -24,8 +29,12 @@
 
 
 <page-query>
-query {
-  allBlogPost{
+query ($page: Int){
+  allBlogPost(perPage:1, page: $page) @paginate{
+    pageInfo {
+      totalPages
+      currentPage
+    }
     edges{
       node{
         title
@@ -40,6 +49,7 @@ query {
 
 <script>
 import BlogList from '~/components/BlogList.vue'
+import { Pager } from 'gridsome'
 
 export default {
   metaInfo: {
@@ -47,6 +57,7 @@ export default {
   },
   components: {
     BlogList,
-  }
+    Pager,
+  },
 }
 </script>
