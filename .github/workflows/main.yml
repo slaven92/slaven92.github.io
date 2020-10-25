@@ -39,8 +39,10 @@ jobs:
       
       - name: Setup Node.js environment
         uses: actions/setup-node@v2.1.2
+        
+      - name: install Yarn
         if: steps.node-cache.outputs.cache-hit != 'true'
-      - run: |
+        run: |
             cd blog
             yarn --frozen-lockfile
             cd ..
