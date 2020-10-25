@@ -4,18 +4,27 @@
       <div class="card mb-4">
         <h5 class="card-header">Search</h5>
         <div class="card-body">
+          
           <div class="input-group">
             <input
+              id="search"
               type="text"
+              v-model="searchTerm"
               class="form-control"
               placeholder="Search for..."
             />
-            <span class="input-group-append">
-              <button class="btn btn-secondary disabled" type="button">
-                Go!
-              </button>
-            </span>
           </div>
+
+          <div>
+            <g-link
+              v-for="result in searchResults"
+              :key="result.id"
+              :to="result.path"
+              class="navbar-item">
+              {{ result.title }}
+            </g-link>
+          </div>
+          
         </div>
       </div>
 
@@ -66,6 +75,7 @@ export default {
   data() {
     return{
       columns: 2,
+      searchTerm: '',
     }
   },
   computed:{
@@ -78,6 +88,11 @@ export default {
         result.unshift(temp)
       }
       return result
+    },
+    searchResults () {
+      const searchTerm = this.searchTerm
+      if (searchTerm.length < 1) return []
+      return this.$search.search({ query: searchTerm, limit: 5 })
     }
   }
 }

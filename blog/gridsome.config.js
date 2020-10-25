@@ -52,6 +52,19 @@ module.exports = {
     {
       use: 'gridsome-plugin-robots-txt',
     },
+    {
+      use: 'gridsome-plugin-flexsearch',
+      options: {
+        searchFields: ['title', 'tags', 'content'],
+        collections: [
+          {
+            typeName: 'BlogPost',
+            indexName: 'BlogPost',
+            fields: ['title', 'path']
+          }
+        ]
+      }
+    }
   ],
   transformers: {
     remark: {}
