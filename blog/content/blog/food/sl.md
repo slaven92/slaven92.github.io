@@ -23,19 +23,48 @@ ovo jos jedne stvari
 
 Emphasis, aka italics, with *asterisks* or _underscores_.
 
-1. slavem
+1. slaven
 2. hello
+
+## H2 heading
 
 [I'm an inline-style link](https://www.google.com)
 
 
+www.google.com
+
 Inline-style: 
 ![alt text](https://github.com/adam-p/markdown-here/raw/master/src/common/images/icon48.png "Logo Title Text 1")
 
-```python
+``` python
 s = "Python syntax highlighting"
 print s
 ```
+
+He said:
+
+>Slaven je car
+>I ovo je bas kul fora
+>Hello my friend
+
+- [x] completed
+- [ ] not completed
+
+:sparkles:
+
+First Header | Second Header
+------------ | -------------
+Content cell 1 | Content cell 2
+Content column 1 | Content column 2
+
+
+
+The example for a math expression:
+$$
+(a+b)^2 = a^2 + 2ab + b^2
+$$ 
+
+The example for an inline math expression is $ (a+b)^2 = a^2 + 2ab + b^2 $. 
 
 Markdown | Less | Pretty
 --- | --- | ---

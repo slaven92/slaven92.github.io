@@ -67,7 +67,12 @@ module.exports = {
     }
   ],
   transformers: {
-    remark: {}
+    remark: {
+      plugins: [
+        '@gridsome/remark-prismjs',
+        'gridsome-remark-katex'
+      ]
+    }
   },
   templates: {
     BlogPost: '/blog/:title',
