@@ -26,8 +26,7 @@
           >
         </div>
         <div class="card-footer text-muted">
-          Posted on January 1, 2017 by
-          <g-link href="/">Start Bootstrap</g-link>
+          Posted on {{ blog.node.date }}
         </div>
       </div>
       

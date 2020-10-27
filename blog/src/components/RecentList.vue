@@ -2,20 +2,19 @@
     <div>
     
 
-      <div v-for="(rowNum,indexr) in numberOfRows" :key="indexr*1000+1" class="row">
-      <div v-for="(colNum,indexc) in numberOfColumns" :key="indexc*5000+1" class="col-lg-4 col-sm-6 portfolio-item">
-        <div class="card h-100">
-          <g-link :to="$static.allBlogPost.edges[indexc].node.path"><g-image class="card-img-top" src="~/assets/images/pier.jpg" alt=""/></g-link>
-          <div class="card-body">
-            <h4 class="card-title">
-              <g-link :to="$static.allBlogPost.edges[indexc].node.path">{{$static.allBlogPost.edges[0].node.title}}</g-link>
-            </h4>
-            <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet numquam aspernatur eum quasi sapiente nesciunt? Voluptatibus sit, repellat sequi itaque deserunt, dolores in, nesciunt, illum tempora ex quae? Nihil, dolorem!</p>
+      <div v-for="(list,indexr) in split" :key="indexr" class="row">
+        <div v-for="item in list" :key="item.node.id" class="col-lg-4 col-sm-6 portfolio-item">
+          <div class="card h-100">
+            <g-link :to="item.node.path"><g-image class="card-img-top" src="~/assets/images/pier.jpg" alt=""/></g-link>
+            <div class="card-body">
+              <h4 class="card-title">
+                <g-link :to="item.node.path">{{item.node.title}}</g-link>
+              </h4>
+              <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet numquam aspernatur eum quasi sapiente nesciunt? Voluptatibus sit, repellat sequi itaque deserunt, dolores in, nesciunt, illum tempora ex quae? Nihil, dolorem!</p>
+            </div>
           </div>
         </div>
       </div>
-      </div>
-
 
     </div>
 </template>
@@ -40,10 +39,22 @@ query {
 export default {
     data () {
     return {
-      numberOfColumns: 2,
-      numberOfRows: 1,
+      columns: 3,
+      rows: 2,
     }
   },
+  computed:{
+    split: function(){
+      var all = this.$static.allBlogPost.edges
+      var result = []
+      for (let index = 0; index < this.rows; index++) {
+        var chunks=this.columns
+        var temp = all.slice(index*chunks,(index+1)*chunks)
+        result.push(temp)
+      }
+      return result
+    }
+  }
 }
 </script>
 

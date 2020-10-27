@@ -15,12 +15,12 @@
             />
           </div>
 
-          <div>
+          <div class="list-group">
             <g-link
               v-for="result in searchResults"
               :key="result.id"
               :to="result.path"
-              class="navbar-item">
+              class=list-group-item list-group-item-action>
               {{ result.title }}
             </g-link>
           </div>

@@ -10,7 +10,7 @@
 
       <ol class="breadcrumb">
         <li class="breadcrumb-item">
-          <g-link to="/index">Home</g-link>
+          <g-link to="/">Home</g-link>
         </li>
         <li class="breadcrumb-item active">Blog Home</li>
       </ol>
@@ -30,7 +30,7 @@
 
 <page-query>
 query ($page: Int){
-  allBlogPost(perPage:1, page: $page) @paginate{
+  allBlogPost(perPage:10, page: $page) @paginate{
     pageInfo {
       totalPages
       currentPage
@@ -39,6 +39,7 @@ query ($page: Int){
       node{
         title
         path
+        date
       }
     }
   }
