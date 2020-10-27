@@ -1,1 +1,1 @@
-{"hash":"ef7b95eaba4328540e3ff948345478e114bc1cc1","data":{"allBlogPost":{"pageInfo":{"totalPages":2,"currentPage":1},"edges":[{"node":{"title":"test2","path":"/blog/test2/"}}]}},"context":{}}
+{"hash":"8eff080076c99670ca1e4d54df1d72b68964f993","data":{"allBlogPost":{"pageInfo":{"totalPages":1,"currentPage":1},"edges":[{"node":{"title":"test2","path":"/blog/test2/","date":"2019-02-04T00:00:00.000Z"}},{"node":{"title":"A simple design for Halo","path":"/blog/a-simple-design-for-halo/","date":"2019-02-04T00:00:00.000Z"}}]}},"context":{}}
