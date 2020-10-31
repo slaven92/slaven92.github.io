@@ -3,7 +3,7 @@
     <div class="row justify-content-center">
       <div class="col col-sm-6">
         <!-- This is name input field -->
-        <div class="input-group" v-if="status === 'init'">
+        <div class="input-group" v-show="status === 'init'">
           <input
             type="text"
             v-model="playerName"
@@ -13,12 +13,12 @@
         </div>
 
         <!-- This is new channel name -->
-        <div v-if="status === 'create'">
+        <div v-show="status === 'create'">
           Send this to your teammate: <strong>{{ channel }}</strong>
         </div>
 
         <!-- This is join channel input -->
-        <div class="input-group" v-if="status === 'join'">
+        <div class="input-group" v-show="status === 'join'">
           <input
             type="text"
             v-model="channel"
@@ -27,6 +27,13 @@
           />
         </div>
 
+        <!-- This is loding screen -->
+        <div v-show="status === 'create' || status === 'start'">
+          Hello {{ playerName }}, waiting for other player!
+        </div>
+
+
+        <!-- Buttons for interaction TODO fix the logix of this component -->
         <div>
           <button
             class="btn btn-primary"
@@ -69,8 +76,7 @@ export default {
     },
     createGame() {
       this.channel = this.getRandomString();
-      (this.showNameInput = false),
-        this.$emit("create-game", this.playerName, this.channel);
+      this.$emit("send-id", this.playerName, this.channel);
       this.status = "create";
     },
     joinGame() {
@@ -79,10 +85,9 @@ export default {
         this.joinButtonTitle = "Start Game";
       } else if (this.status === "join") {
           this.status = 'start'
-          this.$emit("join-game", this.playerName, this.channel);
+          this.$emit("send-id", this.playerName, this.channel);
       }
-    },
-    startGame() {},
+    }
   },
 };
 </script>
