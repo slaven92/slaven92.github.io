@@ -1,6 +1,7 @@
 <template>
   <Layout>
     <div class="container">
+      
       <!-- choose name and connect part of the game -->
       <div v-if="status === 'start'">
         <NameSelect @send-id="getId" />
@@ -53,12 +54,16 @@ export default {
       channel: "",
       name: "",
       oponentName: "",
+
+      // needed for the placing part of the game
       dragColorList: [],
       startPosition: [],
       orientation: "",
-      boats: [], //all boats placed in the
       sizes: [4, 3, 3, 2, 2, 2, 1, 1, 1, 1],
       sizeIndex: 0,
+
+      // final boat position
+      boats: [], //all boats placed in the
     };
   },
   components: {
