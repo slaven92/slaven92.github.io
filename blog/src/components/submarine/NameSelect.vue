@@ -87,6 +87,9 @@ export default {
           this.status = 'start'
           this.$emit("send-id", this.playerName, this.channel);
       }
+    },
+    connect(playerName, channel, mode){
+
     }
   },
 };
