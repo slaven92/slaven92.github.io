@@ -1,5 +1,5 @@
 <template>
-    <footer class="py-3 bg-dark">
+    <footer class="py-3 bg-dark mt-5">
         <div class="container">
             <p class="m-0 text-center text-white norris">{{ fact }}</p>
         </div>

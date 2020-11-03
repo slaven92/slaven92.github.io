@@ -1,20 +1,31 @@
 <template>
-  <div class="row justify-content-center">
-    <div class="col-md-3">
-      <Moveable
-        @user-click="startShape"
-        :size="sizes[sizeIndex]"
-        @drop="drop"
-      />
+  <div>
+    <p class="text-center h1">Your opponet is {{ opponent }}</p>
+
+    <div v-if="this.opponentReady">
+      <p class="text-center h3">{{ opponent }} is ready.</p>
+    </div>
+    <div v-else>
+      <p class="text-center h3">{{ opponent }} is choosing positions.</p>
     </div>
 
-    <div class="col-md-6">
-      <Table
-        class="tablee"
-        @drag-over="putColor"
-        :tempColor="dragColorList"
-        :boats="boats"
-      />
+    <div class="row justify-content-center">
+      <div class="col-md-3">
+        <Moveable
+          @user-click="startShape"
+          :size="sizes[sizeIndex]"
+          @drop="drop"
+        />
+      </div>
+
+      <div class="col-md-6">
+        <Table
+          class="tablee"
+          @drag-over="putColor"
+          :tempColor="dragColorList"
+          :boats="boats"
+        />
+      </div>
     </div>
   </div>
 </template>
@@ -35,11 +46,19 @@ export default {
       orientation: "",
       sizes: [4, 3, 3, 2, 2, 2, 1, 1, 1, 1],
       sizeIndex: 0,
+
+      //needed for final sync with other player
+      opponentReady: false,
+      playerReady: false,
     };
   },
   components: {
     Moveable,
     Table,
+  },
+  props: {
+    ws: WebSocket,
+    opponent: String,
   },
   methods: {
     putColor(row, column) {
@@ -65,13 +84,40 @@ export default {
         positions: this.dragColorList,
       });
       this.dragColorList = [];
-      this.sizeIndex += 1
+      this.sizeIndex += 1;
 
-      if (this.sizeIndex===this.sizes.length){
-        //   TODO wait for the player to finnish setup
-          this.$emit('boats-choosen', this.boats)
+      if (this.sizeIndex === this.sizes.length) {
+        this.playerReady = true;
+        this.waitForOtherPlayer();
       }
     },
+    waitForOtherPlayer() {
+      if (this.opponentReady) {
+        this.sendMessage("ready");
+        this.syncd();
+      } else {
+        this.sendMessage("ready");
+      }
+    },
+    recieveMessage(event) {
+      var msg = event.data;
+      if (msg === "ready") {
+        this.opponentReady = true;
+      }
+      if (this.playerReady) {
+        this.syncd();
+      }
+    },
+    sendMessage(msg) {
+      this.ws.send(msg);
+    },
+    syncd() {
+      this.$emit("boats-choosen", this.boats);
+      this.ws.onmessage = null;
+    },
+  },
+  mounted() {
+    this.ws.onmessage = this.recieveMessage;
   },
 };
 </script>

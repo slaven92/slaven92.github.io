@@ -32,7 +32,6 @@
           Hello {{ playerName }}, waiting for other player!
         </div>
 
-
         <!-- Buttons for interaction TODO fix the logix of this component -->
         <div>
           <button
@@ -66,8 +65,11 @@ export default {
     return {
       status: "init", //init, create, join, start
       playerName: "",
+      opponentName: "",
+      mode: "",
       channel: "",
       joinButtonTitle: "Join Game",
+      ws: null,
     };
   },
   methods: {
@@ -76,20 +78,41 @@ export default {
     },
     createGame() {
       this.channel = this.getRandomString();
-      this.$emit("send-id", this.playerName, this.channel);
+      // this.$emit("send-id", this.playerName, this.channel);
       this.status = "create";
+      this.mode = "create";
+      this.connect();
     },
     joinGame() {
       if (this.status === "init") {
         this.status = "join";
         this.joinButtonTitle = "Start Game";
       } else if (this.status === "join") {
-          this.status = 'start'
-          this.$emit("send-id", this.playerName, this.channel);
+        this.status = "start";
+        this.mode = "join";
+        // this.$emit("send-id", this.playerName, this.channel);
+        this.connect();
       }
     },
-    connect(playerName, channel, mode){
-
+    connect() {
+      this.ws = new WebSocket(`ws://localhost:8000/ws/${this.channel}`);
+      this.ws.onmessage = this.recieveMessage;
+      if (this.mode === "join") {
+        setTimeout(this.sendMessage, 1000, this.playerName);
+      }
+    },
+    recieveMessage(event) {
+      var msg = event.data;
+      this.opponentName = msg;
+      if (this.mode === "create") {
+        this.ws.send(this.playerName);
+      }
+      this.onmessage = null
+      var playsFirst = this.mode==='create' ? true : false
+      this.$emit('player-connected', this.ws, this.playerName, this.opponentName, playsFirst)
+    },
+    sendMessage(msg){
+      this.ws.send(msg)
     }
   },
 };

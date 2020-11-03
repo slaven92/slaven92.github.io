@@ -36,7 +36,7 @@ export default {
   },
   props: {
     size: {
-      default: 4,
+      default: 0,
     }
   },
   computed: {

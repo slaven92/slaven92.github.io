@@ -1,19 +1,30 @@
 <template>
   <Layout>
     <div class="container">
-
       <!-- choose name and connect part of the game -->
       <div v-if="status === 'start'">
-        <NameSelect @send-id="getId" />
+        <NameSelect @player-connected="doPlayerConnected" />
       </div>
 
       <!-- select part of the game -->
       <div v-else-if="status === 'select'">
-        <ChooseBoats @boats-choosen="doBoatsChoosen"/>
+        <ChooseBoats
+          @boats-choosen="doBoatsChoosen"
+          :ws="this.ws"
+          :opponent="this.opponentName"
+        />
       </div>
 
       <!-- play part of the game -->
-      <div v-else-if="status === 'play'">slaven</div>
+      <div v-else-if="status === 'play'">
+        <Game
+          :first="this.playsFirst"
+          :boats="this.boats"
+          :playerName="this.name"
+          :opponentName="this.opponentName"
+          :ws="this.ws"
+        />
+      </div>
 
       <!-- chat is availabe as soon as you provide the name and connect -->
       <div v-if="status !== 'start'">
@@ -27,54 +38,39 @@
 import Chat from "~/components/submarine/Chat.vue";
 import NameSelect from "~/components/submarine/NameSelect.vue";
 import ChooseBoats from "~/components/submarine/ChooseBoats.vue";
+import Game from "~/components/submarine/Game.vue";
 
 export default {
   data() {
     return {
-      // important state
-      status: "select", //start, select, play
+      // important states
+      status: "play", //start, select, play
       ws: null,
-      channel: "",
       name: "",
-      oponentName: "",
-      boats: [], //final boats list
+      opponentName: "",
+      boats: [{positions:[[1,1]]}], //final boats list
+      playsFirst: false,
     };
   },
   components: {
     Chat,
     NameSelect,
     ChooseBoats,
+    Game,
   },
   methods: {
-    getId(name, channel) {
-      this.name = name;
-      this.channel = channel;
-      this.ws = new WebSocket(`ws://localhost:8000/ws/${channel}`);
-      this.ws.onmessage = this.recieveMessage;
-      var msg = JSON.stringify({
-        playerName: this.name,
-      });
-      setTimeout(this.sendMessage, 1000, msg);
+    doBoatsChoosen(boats) {
+      this.boats = boats;
+      this.status = "play";
     },
-    recieveMessage(event) {
-      var msg = JSON.parse(event.data);
-      if ("oponent" in msg) {
-        this.oponentName = msg.oponent;
-        this.status = "select";
-      } else {
-        this.oponentName = msg.playerName;
-        msg.oponent = this.name;
-        this.ws.send(JSON.stringify(msg));
-        this.status = "select";
-      }
+
+    doPlayerConnected(ws, playerName, opponentName, playsFirst) {
+      this.name = playerName;
+      this.opponentName = opponentName;
+      this.ws = ws;
+      this.playsFirst = playsFirst;
+      this.status = "select";
     },
-    sendMessage(msg) {
-      this.ws.send(msg);
-    },
-    doBoatsChoosen(boats){
-      this.boats=boats,
-      this.status = "play"
-    }
   },
 };
 </script>
