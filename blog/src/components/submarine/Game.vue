@@ -14,19 +14,22 @@
         <OpponentTable
           :miss="this.myMiss"
           :hits="this.myHits"
+          :searchIndex="this.mySearchIndex"
           @i-choose="this.doIChoose"
         />
       </div>
 
       <div v-show="!this.isPlaying" class="col-md-6">
-        <MyTable :boats="this.fullBoats" :miss="this.miss" />
+        <MyTable
+          :miss="this.miss"
+          :boats="this.boats"
+          :searchIndex="this.searchIndex"
+          :hits="this.hits"
+        />
       </div>
     </div>
 
-
-    <GameOver ref="go"/>
-    <button @click="$refs.go.turnOn()">click me</button>
-
+    <GameOver :name="this.calculatedName" ref="go" @user-game-over="$emit('user-game-over')" />
   </div>
 </template>
 
@@ -38,30 +41,18 @@ import GameOver from "~/components/submarine/GameOver.vue";
 export default {
   data() {
     return {
-      isEndOfGame: false,
       isWinner: false,
 
       isPlaying: null,
-      fullBoats: [
-        //   {
-        //       hit:[[8,7]],
-        //       positions:[[8,7]],
-        //   }
-      ], //including hits
-      miss: [
-        //   [1,1]
-      ], // array of miss positions
 
-      //my tries
-      myMiss: [
-        // [1,1]
-      ],
-      myHits: {
-        //   a:{
-        //       positions:[[1,1],[1,2]],
-        //       hit:"full",
-        //   }
-      },
+      //guesses by opponent
+      hits: {},
+      miss: [],
+
+      //guessed made by me
+      mySearchIndex: {},
+      myMiss: [],
+      myHits: {},
     };
   },
   components: {
@@ -70,21 +61,22 @@ export default {
     GameOver,
   },
   props: {
-    boats: Array,
     first: Boolean,
     playerName: String,
     opponentName: String,
     ws: WebSocket,
+    boats: Object,
+    searchIndex: Object,
+  },
+  computed:{
+    calculatedName() {
+      if(this.isWinner) return this.playerName
+      return this.opponentName
+    }
   },
   mounted() {
     this.ws.onmessage = this.recieveMessage;
     this.isPlaying = this.first;
-    this.boats.forEach((boat) => {
-      this.fullBoats.push({
-        positions: boat.positions,
-        hit: [],
-      });
-    });
   },
   methods: {
     recieveMessage(event) {
@@ -97,17 +89,28 @@ export default {
         //{status:hit|miss, pos:[x,y], id:t, mode:"full|partial"}
         var result = this.checkIfHit(msg[0], msg[1]);
         this.ws.send(result);
+        const tempResult = JSON.parse(result)
+        if (tempResult.mode === "end") {
+          console.log(tempResult)
+          this.isWinner = false;
+          this.$refs.go.turnOn();
+        }
       } else {
         //in this case i incorporate the results made by me
         if (msg.status === "miss") {
-          this.myMiss.push(msg.pos);
+          this.myMiss.push(JSON.stringify(msg.pos));
           this.isPlaying = false;
         } else {
+          //hit branch or end branch
+          //add this point to the search index
+          this.$set(this.mySearchIndex, JSON.stringify(msg.pos), `${msg.id}`);
+
           //in case i have made hit
           if (msg.mode === "end") {
             //end of the game
             //TODO mark the end of the game
-            console.log("kraj igreeeeee");
+            this.isWinner = true;
+            this.$refs.go.turnOn();
           }
 
           //in case i have hit it prevously
@@ -135,58 +138,61 @@ export default {
       this.ws.send(JSON.stringify([row, column]));
     },
     checkIfHit(row, column) {
-      for (let i = 0; i < this.fullBoats.length; i++) {
-        const boat = this.fullBoats[i];
-        for (let j = 0; j < boat.positions.length; j++) {
-          const pos = boat.positions[j];
-          if (row === pos[0] && column === pos[1]) {
-            //register hit
-            this.fullBoats[i].hit.push([[row, column]]);
-            //check if it is full or partiral
-            if (
-              this.fullBoats[i].hit.length ===
-              this.fullBoats[i].positions.length
-            ) {
-              // check if ed of the game
-              if (this.isFinnished()) {
-                //TODO finsih this
-                console.log("kraaaaaaj");
-                return JSON.stringify({
-                  status: "hit",
-                  mode: "end",
-                });
+      let posString = JSON.stringify([row, column]);
+
+      //this is a hit
+      if (posString in this.searchIndex) {
+        let boatId = this.searchIndex[posString];
+
+        //initialize
+        let temp = [];
+        if (boatId in this.hits) temp = this.hits[boatId].positions;
+
+        temp.push(JSON.stringify([row, column]));
+        this.$set(this.hits, `${boatId}`, {
+          positions: temp,
+        });
+
+        //default is partial, but it could be full or end
+        let mode = "partial";
+        if (
+          this.hits[boatId].positions.length ===
+          this.boats[boatId].positions.length
+        ) {
+          mode = "end";
+          //check if it is the end of the game
+          for (const id in this.boats) {
+            if (this.boats.hasOwnProperty(id)) {
+              const boatPositionLength = this.boats[id].positions.length;
+
+              if (!this.hits.hasOwnProperty(id)) {
+                mode = "full";
+                break;
               }
-              return JSON.stringify({
-                status: "hit",
-                pos: [row, column],
-                id: i,
-                mode: "full",
-              });
-            } else {
-              return JSON.stringify({
-                status: "hit",
-                pos: [row, column],
-                id: i,
-                mode: "partial",
-              });
+
+              if (boatPositionLength !== this.hits[id].positions.length) {
+                mode = "full";
+                break;
+              }
             }
           }
         }
+
+        return JSON.stringify({
+          status: "hit",
+          pos: [row, column],
+          id: boatId,
+          mode: mode,
+        });
       }
 
-      this.miss.push([row, column]);
+      // finally it is a miss
+      this.miss.push(JSON.stringify([row, column]));
       this.isPlaying = true;
       return JSON.stringify({
         status: "miss",
         pos: [row, column],
       });
-    },
-    isFinnished() {
-      for (let j = 0; j < this.fullBoats.length; j++) {
-        const boat = this.fullBoats[j]; //select only object, i dont care about id
-        if (boat.hit.length < boat.positions.length) return false;
-      }
-      return true;
     },
   },
 };

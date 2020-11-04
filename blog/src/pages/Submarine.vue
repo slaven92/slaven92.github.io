@@ -18,11 +18,13 @@
       <!-- play part of the game -->
       <div v-else-if="status === 'play'">
         <Game
+          @user-game-over="doGameOver"
           :first="this.playsFirst"
           :boats="this.boats"
           :playerName="this.name"
           :opponentName="this.opponentName"
           :ws="this.ws"
+          :searchIndex="this.searchIndex"
         />
       </div>
 
@@ -34,6 +36,7 @@
   </Layout>
 </template>
 
+
 <script>
 import Chat from "~/components/submarine/Chat.vue";
 import NameSelect from "~/components/submarine/NameSelect.vue";
@@ -44,12 +47,14 @@ export default {
   data() {
     return {
       // important states
-      status: "play", //start, select, play
+      status: "start", //start, select, play
       ws: null,
       name: "",
       opponentName: "",
-      boats: [{positions:[[1,1]]}], //final boats list
       playsFirst: false,
+
+      boats:{},
+      searchIndex: {},
     };
   },
   components: {
@@ -59,8 +64,9 @@ export default {
     Game,
   },
   methods: {
-    doBoatsChoosen(boats) {
+    doBoatsChoosen(boats, searchIndex) {
       this.boats = boats;
+      this.searchIndex = searchIndex;
       this.status = "play";
     },
 
@@ -71,6 +77,9 @@ export default {
       this.playsFirst = playsFirst;
       this.status = "select";
     },
+    doGameOver(){
+      location.reload(); 
+    }
   },
 };
 </script>

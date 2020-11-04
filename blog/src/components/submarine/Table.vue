@@ -1,17 +1,18 @@
 <template>
   <div>
-    <table class="table table-bordered table-sm">
-      <tr v-for="index in num_of_fields" :key="index">
-        <td
-          v-for="index2 in num_of_fields"
-          :key="index2 * (index + 2) * 1651"
-          @dragover="$emit('drag-over', index, index2)"
-          :style="background(index, index2)"
-        >
-          s
-        </td>
-      </tr>
-    </table>
+    <div
+      v-for="index in num_of_fields"
+      :key="index"
+      class="d-flex justify-content-center"
+    >
+      <div
+        class="border p-1 p-sm-2 p-md-3"
+        v-for="index2 in num_of_fields"
+        :key="index2 * (index + 2) * 1651"
+        @dragover="$emit('drag-over', index, index2)"
+        :style="'background:' + color(index, index2)"
+      ></div>
+    </div>
   </div>
 </template>
 
@@ -24,24 +25,17 @@ export default {
   },
   props: {
     tempColor: Array,
-    boats: Array,
+    searchIndex: Object,
   },
   methods: {
-    background(row, column) {
-      var color = "";
-      this.tempColor.forEach((element) => {
-        if (element[0] === row && element[1] === column) {
-          color = "background:green";
-        }
-      });
-      this.boats.forEach((element) => {
-        element.positions.forEach((pos) => {
-          if (pos[0] === row && pos[1] === column) {
-            color = "background:green";
-          }
-        });
-      });
-      return color;
+    color(row, column) {
+      if (this.tempColor.includes(JSON.stringify([row, column])))
+        return "green";
+
+      //find all the boats
+      if (JSON.stringify([row, column]) in this.searchIndex) return "green";
+
+      return "";
     },
   },
 };

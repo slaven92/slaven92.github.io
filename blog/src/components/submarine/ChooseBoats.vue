@@ -23,7 +23,7 @@
           class="tablee"
           @drag-over="putColor"
           :tempColor="dragColorList"
-          :boats="boats"
+          :searchIndex="searchIndex"
         />
       </div>
     </div>
@@ -38,7 +38,8 @@ import Table from "~/components/submarine/Table.vue";
 export default {
   data() {
     return {
-      boats: [], //final boats list
+      boats:{}, //new final boats list
+      searchIndex:{}, //searchindex for boats
 
       // needed for the placing part of the game
       dragColorList: [],
@@ -61,15 +62,17 @@ export default {
     opponent: String,
   },
   methods: {
+    // calculate the vector on the table for the current boat
+    //TODO make it red if they overlap
     putColor(row, column) {
       var tempArray = [];
       for (let index = 0; index < this.sizes[this.sizeIndex]; index++) {
         if (this.orientation === "horizontal") {
           var temp = [row, column - this.startPosition[1] + 1 + index];
-          tempArray.push(temp);
+          tempArray.push(JSON.stringify(temp));
         } else if (this.orientation === "vertical") {
           var temp = [row - this.startPosition[0] + 1 + index, column];
-          tempArray.push(temp);
+          tempArray.push(JSON.stringify(temp));
         }
       }
       this.dragColorList = tempArray;
@@ -78,11 +81,23 @@ export default {
       this.startPosition = [row, column];
       this.orientation = orientation;
     },
+
+    //on relese populate the boats and the searchIndex state
+    //and clear the temp vector
     drop() {
-      this.boats.push({
-        size: this.sizes[this.sizeIndex],
+
+      this.boats[`${this.sizeIndex}`] = {
         positions: this.dragColorList,
-      });
+        size: this.sizes[this.sizeIndex],
+      }
+
+      for (let i = 0; i < this.dragColorList.length; i++) {
+        const pos = this.dragColorList[i];
+        this.searchIndex[pos] = this.sizeIndex
+      }
+
+
+
       this.dragColorList = [];
       this.sizeIndex += 1;
 
@@ -91,6 +106,8 @@ export default {
         this.waitForOtherPlayer();
       }
     },
+
+    //functions to sync up players after they have finished their choices
     waitForOtherPlayer() {
       if (this.opponentReady) {
         this.sendMessage("ready");
@@ -111,8 +128,10 @@ export default {
     sendMessage(msg) {
       this.ws.send(msg);
     },
+
+    //emit that everything is ready
     syncd() {
-      this.$emit("boats-choosen", this.boats);
+      this.$emit("boats-choosen", this.boats, this.searchIndex);
       this.ws.onmessage = null;
     },
   },

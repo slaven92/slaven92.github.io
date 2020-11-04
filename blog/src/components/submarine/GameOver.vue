@@ -15,7 +15,6 @@
       class="modal fade"
       id="exampleModal"
       tabindex="-1"
-      data-backdrop="static"
       aria-labelledby="exampleModalLabel"
       aria-hidden="true"
     >
@@ -31,7 +30,7 @@
               type="button"
               class="btn btn-primary"
             >
-              Save changes
+              Play another
             </button>
           </div>
         </div>

@@ -1,21 +1,17 @@
 <template>
-  <div>
-    <table
-      class="table table-bordered table-sm"
-      @click="switchOrientation"
-      draggable
-      @dragend="$emit('drop')"
+  <div @click="switchOrientation" draggable @dragend="$emit('drop')">
+    <div
+      v-for="row in rows"
+      :key="row * 5 + 1"
+      class="d-flex justify-content-center"
     >
-      <tr v-for="row in rows" :key="row * 5 + 1">
-        <td
-          v-for="column in columns"
-          :key="column * 7 + 2"
-          @mousedown="$emit('user-click', row, column, orientation)"
-        >
-          s
-        </td>
-      </tr>
-    </table>
+      <div
+        class="border p-1 p-sm-2 p-md-3"
+        v-for="column in columns"
+        :key="column * 7 + 2"
+        @mousedown="$emit('user-click', row, column, orientation)"
+      ></div>
+    </div>
   </div>
 </template>
 
@@ -37,7 +33,7 @@ export default {
   props: {
     size: {
       default: 0,
-    }
+    },
   },
   computed: {
     rows() {
