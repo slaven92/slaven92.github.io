@@ -41,8 +41,8 @@ export default {
     },
   },
   async mounted() {
-    // this.ws = new WebSocket(`ws://localhost:8000/ws/chat/slaven`);
-    this.ws =  new WebSocket(`ws://localhost:8000/ws/chat/${this.name}`);
+    this.ws =  new WebSocket(`wss://reley.slaven92.tk/ws/chat/${this.name}`);
+    // this.ws =  new WebSocket(`ws://localhost:8000/ws/chat/${this.name}`);
     this.ws.onmessage = this.recieveMessage;
   },
 };

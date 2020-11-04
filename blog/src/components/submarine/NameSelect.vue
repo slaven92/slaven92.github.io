@@ -95,7 +95,8 @@ export default {
       }
     },
     connect() {
-      this.ws = new WebSocket(`ws://localhost:8000/ws/${this.channel}`);
+      // this.ws = new WebSocket(`ws://localhost:8000/ws/${this.channel}`);
+      this.ws = new WebSocket(`wss://reley.slaven92.tk/ws/${this.channel}`);
       this.ws.onmessage = this.recieveMessage;
       if (this.mode === "join") {
         setTimeout(this.sendMessage, 1000, this.playerName);

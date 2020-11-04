@@ -91,7 +91,6 @@ export default {
         this.ws.send(result);
         const tempResult = JSON.parse(result)
         if (tempResult.mode === "end") {
-          console.log(tempResult)
           this.isWinner = false;
           this.$refs.go.turnOn();
         }
