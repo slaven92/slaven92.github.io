@@ -57,10 +57,11 @@ export default {
     Moveable,
     Table,
   },
-  props: {
-    ws: WebSocket,
-    opponent: String,
-  },
+  props: ['ws', 'opponent'],
+  // props: {
+  //   ws: WebSocket,
+  //   opponent: String,
+  // },
   methods: {
     // calculate the vector on the table for the current boat
     //TODO make it red if they overlap

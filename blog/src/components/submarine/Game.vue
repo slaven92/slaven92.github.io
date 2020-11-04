@@ -60,14 +60,15 @@ export default {
     OpponentTable,
     GameOver,
   },
-  props: {
-    first: Boolean,
-    playerName: String,
-    opponentName: String,
-    ws: WebSocket,
-    boats: Object,
-    searchIndex: Object,
-  },
+  props: ['first', 'playerName', 'opponentName', 'ws', 'boats', 'searchIndex'],
+  // props: {
+  //   first: Boolean,
+  //   playerName: String,
+  //   opponentName: String,
+  //   ws: WebSocket,
+  //   boats: Object,
+  //   searchIndex: Object,
+  // },
   computed:{
     calculatedName() {
       if(this.isWinner) return this.playerName
