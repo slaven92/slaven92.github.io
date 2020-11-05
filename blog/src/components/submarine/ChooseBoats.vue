@@ -12,6 +12,7 @@
     <div class="row justify-content-center">
       <div class="col-md-3">
         <Moveable
+          class="mt-3"
           @user-click="startShape"
           :size="sizes[sizeIndex]"
           @drop="drop"
@@ -20,7 +21,6 @@
 
       <div class="col-md-6">
         <Table
-          class="tablee"
           @drag-over="putColor"
           :tempColor="dragColorList"
           :searchIndex="searchIndex"
@@ -38,8 +38,8 @@ import Table from "~/components/submarine/Table.vue";
 export default {
   data() {
     return {
-      boats:{}, //new final boats list
-      searchIndex:{}, //searchindex for boats
+      boats: {}, //new final boats list
+      searchIndex: {}, //searchindex for boats
 
       // needed for the placing part of the game
       dragColorList: [],
@@ -57,7 +57,7 @@ export default {
     Moveable,
     Table,
   },
-  props: ['ws', 'opponent'],
+  props: ["ws", "opponent"],
   // props: {
   //   ws: WebSocket,
   //   opponent: String,
@@ -87,17 +87,35 @@ export default {
     //and clear the temp vector
     drop() {
 
+      //out of bounds boats error
+      for (let i = 0; i < this.dragColorList.length; i++) {
+        const element = JSON.parse(this.dragColorList[i]);
+        if (element[0] < 1 || element[0] > 10 || element[1] < 1 || element[1] > 10) {
+          this.dragColorList = [];
+          return
+        }
+      }
+
+      //overlapping error
+      for (let i = 0; i < this.dragColorList.length; i++) {
+        const element = this.dragColorList[i];
+        if (element in this.searchIndex) {
+          this.dragColorList = [];
+          return
+        }
+      }
+
+      //populate the boats
       this.boats[`${this.sizeIndex}`] = {
         positions: this.dragColorList,
         size: this.sizes[this.sizeIndex],
-      }
+      };
 
+      //populate the searchindex
       for (let i = 0; i < this.dragColorList.length; i++) {
         const pos = this.dragColorList[i];
-        this.searchIndex[pos] = this.sizeIndex
+        this.searchIndex[pos] = this.sizeIndex;
       }
-
-
 
       this.dragColorList = [];
       this.sizeIndex += 1;
