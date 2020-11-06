@@ -6,10 +6,10 @@
       class="d-flex justify-content-center"
     >
       <div
-        class="border p-1 p-sm-2 p-md-3"
+        class="border p-3"
         v-for="column in columns"
         :key="column * 7 + 2"
-        @mousedown="$emit('user-click', row, column, orientation)"
+        @mousedown="$emit('user-click', row, column, orientation, $event, 'mouse')"
       ></div>
     </div>
   </div>

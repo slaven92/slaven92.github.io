@@ -12,7 +12,7 @@
     <div class="row justify-content-center">
       <div class="col-md-3">
         <Moveable
-          class="mt-3"
+          class="mt-3 mb-3"
           @user-click="startShape"
           :size="sizes[sizeIndex]"
           @drop="drop"
@@ -78,7 +78,7 @@ export default {
       }
       this.dragColorList = tempArray;
     },
-    startShape(row, column, orientation) {
+    startShape(row, column, orientation, event, mode) {;
       this.startPosition = [row, column];
       this.orientation = orientation;
     },
@@ -104,6 +104,9 @@ export default {
           return
         }
       }
+
+      //empty boats error
+      if(this.dragColorList.length === 0) return 
 
       //populate the boats
       this.boats[`${this.sizeIndex}`] = {

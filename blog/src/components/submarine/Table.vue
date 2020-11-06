@@ -6,7 +6,7 @@
       class="d-flex justify-content-center"
     >
       <div
-        class="border p-1 p-sm-2 p-md-3"
+        class="border p-3"
         v-for="index2 in num_of_fields"
         :key="index2 * (index + 2) * 1651"
         @dragenter="doDragEnter($event, index, index2)"
