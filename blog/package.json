@@ -1,21 +1,49 @@
 {
-  "name": "blog",
+  "name": "gatsby-starter-blog",
   "private": true,
-  "scripts": {
-    "build": "gridsome build",
-    "develop": "gridsome develop",
-    "explore": "gridsome explore"
+  "description": "A starter for a blog powered by Gatsby and Markdown",
+  "version": "0.1.0",
+  "author": "Kyle Mathews <mathews.kyle@gmail.com>",
+  "bugs": {
+    "url": "https://github.com/gatsbyjs/gatsby/issues"
   },
   "dependencies": {
-    "@gridsome/plugin-sitemap": "^0.4.0",
-    "@gridsome/remark-prismjs": "^0.4.0",
-    "@gridsome/source-filesystem": "^0.6.2",
-    "@gridsome/transformer-remark": "^0.6.3",
-    "axios": "^0.21.1",
-    "gridsome": "^0.7.0",
-    "gridsome-plugin-flexsearch": "^1.0.5",
-    "gridsome-plugin-pwa": "^0.0.18",
-    "gridsome-plugin-robots-txt": "^1.0.2",
-    "gridsome-remark-katex": "^0.1.1"
+    "@fontsource/merriweather": "^4.5.14",
+    "@fontsource/montserrat": "^4.5.13",
+    "gatsby": "^5.2.0",
+    "gatsby-plugin-feed": "^5.2.0",
+    "gatsby-plugin-image": "^3.2.0",
+    "gatsby-plugin-manifest": "^5.2.0",
+    "gatsby-plugin-sharp": "^5.2.0",
+    "gatsby-remark-images": "^7.2.0",
+    "gatsby-remark-prismjs": "^7.2.0",
+    "gatsby-remark-responsive-iframe": "^6.2.0",
+    "gatsby-source-filesystem": "^5.2.0",
+    "gatsby-transformer-remark": "^6.2.0",
+    "gatsby-transformer-sharp": "^5.2.0",
+    "prismjs": "^1.29.0",
+    "react": "^18.1.0",
+    "react-dom": "^18.1.0"
+  },
+  "devDependencies": {
+    "prettier": "^2.8.0"
+  },
+  "homepage": "https://github.com/gatsbyjs/gatsby-starter-blog#readme",
+  "keywords": [
+    "gatsby"
+  ],
+  "license": "0BSD",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gatsbyjs/gatsby-starter-blog.git"
+  },
+  "scripts": {
+    "build": "gatsby build",
+    "develop": "gatsby develop",
+    "format": "prettier --write \"**/*.{js,jsx,ts,tsx,json,md}\"",
+    "start": "gatsby develop",
+    "serve": "gatsby serve",
+    "clean": "gatsby clean",
+    "test": "echo \"Write tests! -> https://gatsby.dev/unit-testing\" && exit 1"
   }
 }
