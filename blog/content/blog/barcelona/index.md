@@ -1,7 +1,7 @@
 ---
 title: Barcelona
 date: "2022-12-10"
-description: "Enjoy in this sunny city"
+description: "Enjoy this sunny city"
 ---
 
 # Restaurants
