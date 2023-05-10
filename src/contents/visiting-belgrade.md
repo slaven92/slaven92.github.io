@@ -146,7 +146,7 @@ Very famous and old restaurant with traditional food. Ask waiters for recommenda
 Try traditional meat kebabs. You have to eat it with a lot of onion and 'kajmak'.
 
 ## Modern
-### [Klub knjizevnika](https://goo.gl/maps/bWinzzFdScC1hgJQ8
+### [Klub knjizevnika](https://goo.gl/maps/bWinzzFdScC1hgJQ8)
 Mixture of Franch and Serbian cousine. Here you must try 'gibanica' pie.
 
 ### [Mesara Morava](https://goo.gl/maps/JUkHZQq4dnZjNvc99)
