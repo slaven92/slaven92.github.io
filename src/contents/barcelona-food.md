@@ -14,6 +14,10 @@ description: Enjoy this sunny city
 
 ## Lokacije blizu mora
 
+#### [Bar Nuri](https://maps.app.goo.gl/Pb7qJwysNWej7SoRA)
+
+Klasicni tapasi na neobican nacin. Obavezno probajte njihov pohovani patlidzan(berenjena) i ustipke od bakalara (buñuelos de bacalao).
+
 #### [La Bombeta](https://maps.app.goo.gl/8wcm6rwu8kNqtojU9)
 
 Stara lokacija, malo manji lokal. Ali imaju i [novu](https://maps.app.goo.gl/qdJ4zBNvBsxzMSVK7) lokaciju, malo lepsi prostor restorana.
